@@ -6,10 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using OverwatchApi.Data;
+using OverwatchApi.Data.Repositories;
+using OverwatchApi.Models.RepositoryInterfaces;
 
 namespace OverwatchApi
 {
@@ -26,10 +30,17 @@ namespace OverwatchApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //services.AddDbContext<DataContext>(options =>
+            //   options.UseSqlServer(Configuration.GetConnectionString("DataContext")));
+
+            services.AddTransient<DataInitializer>();
+            services.AddScoped<IHeroRepository, HeroRepository>();
+            services.AddOpenApiDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, DataInitializer dataInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -43,6 +54,10 @@ namespace OverwatchApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseSwaggerUi3();
+            app.UseSwagger();
+
+            dataInitializer.InitializeData();
         }
     }
 }

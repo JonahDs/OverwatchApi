@@ -10,8 +10,6 @@ namespace OverwatchApi.Models
         #region Properties
         public int Id { get; set; }
         public string LeftClick { get; set; }
-
-        //Does allow null
         public string RightClick { get; set; }
         public string MainAbilityOne { get; set; }
         public string MainAbilityTwo { get; set; }
@@ -26,6 +24,10 @@ namespace OverwatchApi.Models
             MainAbilityOne = abOne;
             MainAbilityTwo = abTwo;
             Ultimate = ult;
+        }
+        public HeroAbilitie()
+        {
+
         }
         #endregion
     }

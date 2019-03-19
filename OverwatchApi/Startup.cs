@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using OverwatchApi.Data;
 using OverwatchApi.Data.Repositories;
 using OverwatchApi.Models.RepositoryInterfaces;
 
-namespace OverwatchApi
+namespace RecipeApi
 {
     public class Startup
     {
@@ -31,16 +24,25 @@ namespace OverwatchApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            //services.AddDbContext<DataContext>(options =>
-            //   options.UseSqlServer(Configuration.GetConnectionString("DataContext")));
+            services.AddDbContext<DataContext>(options =>
+              options.UseSqlServer(Configuration.GetConnectionString("DataContext")));
 
-            services.AddTransient<DataInitializer>();
+            services.AddScoped<DataInitializer>();
             services.AddScoped<IHeroRepository, HeroRepository>();
-            services.AddOpenApiDocument();
+
+            services.AddOpenApiDocument(c =>
+            {
+                c.DocumentName = "apidocs";
+                c.Title = "Recipe API";
+                c.Version = "v1";
+                c.Description = "The Recipe API documentation description.";
+            }); //for OpenAPI 3.0 else AddSwaggerDocument();
+
+            services.AddCors(options => options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, DataInitializer dataInitializer)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, DataInitializer dataInitiliazer)
         {
             if (env.IsDevelopment())
             {
@@ -54,10 +56,11 @@ namespace OverwatchApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
             app.UseSwaggerUi3();
             app.UseSwagger();
 
-            dataInitializer.InitializeData();
+            dataInitiliazer.InitializeData(); //.Wait();
         }
     }
 }

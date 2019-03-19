@@ -25,5 +25,9 @@ namespace OverwatchApi.Models
             Abilities = new List<HeroAbilitie>();
         }
         #endregion
+
+        #region Methodes
+        public HeroAbilitie GetAbility(int id) => Abilities.SingleOrDefault(t => t.Id == id);
+        #endregion
     }
 }

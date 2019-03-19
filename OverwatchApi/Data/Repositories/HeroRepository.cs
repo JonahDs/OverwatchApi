@@ -25,7 +25,7 @@ namespace OverwatchApi.Data.Repositories
 
         public Hero GetHeroBy(int id)
         {
-            return _heroes.FirstOrDefault(t => t.Id == id);
+            return _heroes.Include(t => t.Abilities).FirstOrDefault(t => t.Id == id);
         }
     }
 }

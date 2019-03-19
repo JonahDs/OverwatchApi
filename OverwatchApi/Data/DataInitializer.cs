@@ -8,6 +8,7 @@ namespace OverwatchApi.Data
     public class DataInitializer
     {
         private readonly DataContext _dbContext;
+
         public DataInitializer(DataContext dbContext)
         {
             _dbContext = dbContext;
@@ -18,7 +19,7 @@ namespace OverwatchApi.Data
             _dbContext.Database.EnsureDeleted();
             if (_dbContext.Database.EnsureCreated())
             {
-                Console.WriteLine("create succesfull");
+                //seeding the database with recipes, see DBContext               
             }
         }
     }

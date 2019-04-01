@@ -20,12 +20,12 @@ namespace OverwatchApi.Data.Repositories
         }
         public IEnumerable<Hero> GetAll()
         {
-            return _heroes.Include(t => t.Abilities).ToList();
+            return _heroes.Include(t => t.Properties).ToList();
         }
 
         public Hero GetHeroBy(int id)
         {
-            return _heroes.Include(t => t.Abilities).FirstOrDefault(t => t.Id == id);
+            return _heroes.Include(t => t.Properties).FirstOrDefault(t => t.Id == id);
         }
     }
 }

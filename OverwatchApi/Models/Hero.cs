@@ -11,23 +11,24 @@ namespace OverwatchApi.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Role { get; set; }
-        public int Dps { get; set; }
-        public int HealingAmount { get; set; }
+        public bool CanHeal { get; set; }
         public int Health { get; set; }
         public int Armour { get; set; }
         public int Shield { get; set; }
-        public IEnumerable<HeroAbilitie> Abilities { get; set; }
+        public ICollection<HeroProperties> Properties { get; set; }
+        public ICollection<TeamComp> TeamComps { get; set; }
         #endregion
 
         #region Constructor
         public Hero()
         {
-            Abilities = new List<HeroAbilitie>();
+            this.Properties = new List<HeroProperties>();
+            this.TeamComps = new List<TeamComp>();
         }
         #endregion
 
         #region Methodes
-        public HeroAbilitie GetAbility(int id) => Abilities.SingleOrDefault(t => t.Id == id);
+        public HeroProperties GetHeroProperty(int id) => Properties.SingleOrDefault(t => t.HeroId == id);
         #endregion
     }
 }

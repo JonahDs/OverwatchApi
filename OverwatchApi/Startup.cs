@@ -35,29 +35,30 @@ namespace RecipeApi
             services.AddScoped<DataInitializer>();
             services.AddScoped<IHeroRepository, HeroRepository>();
 
-            services.AddOpenApiDocument(c =>
-            {
-                c.DocumentName = "apidocs";
-                c.Title = "Recipe API";
-                c.Version = "v1";
-                c.Description = "The Recipe API documentation description.";
-                //authentication
-                c.DocumentProcessors.Add(
-                    new SecurityDefinitionAppender("JWT Token", new SwaggerSecurityScheme
-                    { Type = SwaggerSecuritySchemeType.ApiKey,
+            services.AddOpenApiDocument
+                (c =>
+                {
+                    c.DocumentName = "apidocs";
+                    c.Title = "Overwatch API";
+                    c.Version = "v1";
+                    c.Description = "My overwatch API.";
+                    c.DocumentProcessors.Add
+                    (new SecurityDefinitionAppender
+                    ("JWT Token", new SwaggerSecurityScheme
+                    {
+                        Type = SwaggerSecuritySchemeType.ApiKey,
                         Name = "Authorization",
                         In = SwaggerSecurityApiKeyLocation.Header,
-                        Description = "Copy 'Bearer' + valid JWT token into field" }));
-                c.OperationProcessors.Add(new OperationSecurityScopeProcessor("JWT Token"));
-            }); //for OpenAPI 3.0 else AddSwaggerDocument();
+                        Description = "Copy 'Bearer' + valid JWT token into field"
+                    }));
+                    c.OperationProcessors.Add(new OperationSecurityScopeProcessor("JWT Token"));
+                });
 
 
-            //add authentication
+
             services.AddAuthentication(x => { x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; }).AddJwtBearer(x =>
             {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
+                x.RequireHttpsMetadata = false; x.SaveToken = true; x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),

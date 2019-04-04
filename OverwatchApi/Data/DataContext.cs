@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using OverwatchApi.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +13,7 @@ namespace OverwatchApi.Data
     {
         public DbSet<Hero> Heroes { get; set; }
 
+        public DbSet<User> User { get; set; }
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
 
@@ -19,29 +22,23 @@ namespace OverwatchApi.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            //Hero structure
             modelBuilder.Entity<Hero>()
                 .HasMany(p => p.Properties).WithOne()
                 .IsRequired()
                 .HasForeignKey("HeroId");
 
-                
+            //HeroProperty  structure
+            modelBuilder.Entity<HeroProperties>()
+               .HasKey(t => t.Id);
 
-            //Hero database structure
-            //modelBuilder.Entity<Hero>().HasKey(t => t.Id);
-            //modelBuilder.Entity<Hero>().Property(t => t.Name).HasMaxLength(50);
-            //modelBuilder.Entity<Hero>().Property(t => t.Role).HasMaxLength(30);
-            //modelBuilder.Entity<Hero>().Property(t => t.Health);
-            //modelBuilder.Entity<Hero>().Property(t => t.Shield);
-            //modelBuilder.Entity<Hero>().Property(t => t.CanHeal);
-            //modelBuilder.Entity<Hero>().HasMany(t => t.Properties).WithOne();
-
-            //
-
-            //HeroProperty database structure
-
-
+            //User structure
+            modelBuilder.Entity<User>()
+                .HasKey(t => t.Username);
 
             //Database seeding
+            #region Seeding
             modelBuilder.Entity<Hero>().HasData(
                 new Hero { Id = 1, Name = "Ana", Role = "Support", CanHeal = true, Health = 200, Armour = 0, Shield = 0 },
                 new Hero { Id = 2, Name = "Soldier:76", Role = "Dps", CanHeal = true, Health = 200, Armour = 0, Shield = 0 },
@@ -72,6 +69,23 @@ namespace OverwatchApi.Data
                 new Hero { Id = 27, Name = "Ashe", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0 },
                 new Hero { Id = 28, Name = "Baptiste", Role = "Support", CanHeal = true, Health = 200, Armour = 0, Shield = 0 }
                 );
+
+            var user = new User
+            {
+                Firstname = "jonah",
+                Lastname = "de smet",
+                Username = "jonah.desmet"
+
+            };
+            var password = new PasswordHasher<User>();
+            var hashed = password.HashPassword(user, "secret");
+            user.Password = hashed;
+
+            modelBuilder.Entity<User>().HasData(
+                    user
+                );
+            #endregion
+
         }
 
     }

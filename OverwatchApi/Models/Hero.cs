@@ -16,14 +16,14 @@ namespace OverwatchApi.Models
         public int Armour { get; set; }
         public int Shield { get; set; }
         public ICollection<HeroProperties> Properties { get; set; }
-        //public ICollection<TeamComp> TeamComps { get; set; }
+        public ICollection<HeroTeamComp> TeamComps { get; set; }
         #endregion
 
         #region Constructor
         public Hero()
         {
             this.Properties = new List<HeroProperties>();
-            //this.TeamComps = new List<TeamComp>();
+            this.TeamComps = new List<HeroTeamComp>();
         }
         #endregion
 

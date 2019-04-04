@@ -10,11 +10,11 @@ namespace OverwatchApi.Models
         public int TeamCompId { get; set; }
         public int Rating { get; set; }
         public string TeamCompName { get; set; }
-        public ICollection<Hero> TeamCompHeroes { get; set; }
+        public ICollection<HeroTeamComp> TeamCompHeroes { get; set; }
 
         public TeamComp()
         {
-            this.TeamCompHeroes = new List<Hero>();
+            this.TeamCompHeroes = new List<HeroTeamComp>();
         }
 
     }

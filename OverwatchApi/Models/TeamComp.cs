@@ -17,5 +17,10 @@ namespace OverwatchApi.Models
             this.TeamCompHeroes = new List<HeroTeamComp>();
         }
 
+        public void AddHero(Hero hero)
+        {
+            HeroTeamComp htc = new HeroTeamComp(hero, this);
+        }
+
     }
 }

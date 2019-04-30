@@ -14,6 +14,9 @@ namespace OverwatchApi.Data
         public DbSet<Hero> Heroes { get; set; }
 
         public DbSet<User> User { get; set; }
+
+        public DbSet<TeamComp> TeamComp { get; set;
+        }
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
 
@@ -53,34 +56,36 @@ namespace OverwatchApi.Data
             //Database seeding
             #region Seeding
             modelBuilder.Entity<Hero>().HasData(
-                new Hero { Id = 1, Name = "Ana", Role = "Support", CanHeal = true, Health = 200, Armour = 0, Shield = 0 },
-                new Hero { Id = 2, Name = "Soldier:76", Role = "Dps", CanHeal = true, Health = 200, Armour = 0, Shield = 0 },
-                new Hero { Id = 3, Name = "Bastion", Role = "Dps", CanHeal = true, Health = 200, Armour = 100, Shield = 0 },
-                new Hero { Id = 4, Name = "Brigitte", Role = "Support", CanHeal = true, Health = 200, Armour = 0, Shield = 50 },
-                new Hero { Id = 5, Name = "D.Va", Role = "Tank", CanHeal = false, Health = 400, Armour = 200, Shield = 0 },
-                new Hero { Id = 6, Name = "Doomfist", Role = "Dps", CanHeal = false, Health = 250, Armour = 0, Shield = 0 },
-                new Hero { Id = 7, Name = "Genji", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0 },
-                new Hero { Id = 8, Name = "Hanzo", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0 },
-                new Hero { Id = 9, Name = "Junkrat", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0 },
-                new Hero { Id = 10, Name = "Lucio", Role = "Support", CanHeal = false, Health = 200, Armour = 0, Shield = 0 },
-                new Hero { Id = 11, Name = "McCree", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0 },
-                new Hero { Id = 12, Name = "Mei", Role = "Dps", CanHeal = true, Health = 250, Armour = 0, Shield = 0 },
-                new Hero { Id = 13, Name = "Mercy", Role = "Support", CanHeal = true, Health = 200, Armour = 0, Shield = 0 },
-                new Hero { Id = 14, Name = "Moira", Role = "Support", CanHeal = true, Health = 200, Armour = 0, Shield = 0 },
-                new Hero { Id = 15, Name = "Orisa", Role = "Tank", CanHeal = false, Health = 200, Armour = 200, Shield = 0 },
-                new Hero { Id = 16, Name = "Phara", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0 },
-                new Hero { Id = 17, Name = "Reaper", Role = "Dps", CanHeal = true, Health = 250, Armour = 0, Shield = 0 },
-                new Hero { Id = 18, Name = "Reinhardt", Role = "Tank", CanHeal = false, Health = 300, Armour = 200, Shield = 0 },
-                new Hero { Id = 19, Name = "Sombra", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0 },
-                new Hero { Id = 20, Name = "Symmetra", Role = "Dps", CanHeal = false, Health = 100, Armour = 0, Shield = 100 },
-                new Hero { Id = 21, Name = "Torbjorn", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0 },
-                new Hero { Id = 22, Name = "Tracer", Role = "Dps", CanHeal = false, Health = 150, Armour = 0, Shield = 0 },
-                new Hero { Id = 23, Name = "Widowmaker", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0 },
-                new Hero { Id = 24, Name = "Winston", Role = "Tank", CanHeal = false, Health = 400, Armour = 100, Shield = 0 },
-                new Hero { Id = 25, Name = "Zarya", Role = "Tank", CanHeal = false, Health = 200, Armour = 0, Shield = 200 },
-                new Hero { Id = 26, Name = "Zenyatta", Role = "Support", CanHeal = true, Health = 50, Armour = 0, Shield = 150 },
-                new Hero { Id = 27, Name = "Ashe", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0 },
-                new Hero { Id = 28, Name = "Baptiste", Role = "Support", CanHeal = true, Health = 200, Armour = 0, Shield = 0 }
+                new Hero { Id = 1, Name = "Ana", Role = "Support", CanHeal = true, Health = 200, Armour = 0, Shield = 0 , Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/ana/hero-select-portrait.png" },
+                new Hero { Id = 2, Name = "Soldier:76", Role = "Dps", CanHeal = true, Health = 200, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/soldier-76/hero-select-portrait.png" },
+                new Hero { Id = 3, Name = "Bastion", Role = "Dps", CanHeal = true, Health = 200, Armour = 100, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/bastion/hero-select-portrait.png" },
+                new Hero { Id = 4, Name = "Brigitte", Role = "Support", CanHeal = true, Health = 200, Armour = 0, Shield = 50, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/brigitte/hero-select-portrait.png" },
+                new Hero { Id = 5, Name = "D.Va", Role = "Tank", CanHeal = false, Health = 400, Armour = 200, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/dva/hero-select-portrait.png" },
+                new Hero { Id = 6, Name = "Doomfist", Role = "Dps", CanHeal = false, Health = 250, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/doomfist/hero-select-portrait.png" },
+                new Hero { Id = 7, Name = "Genji", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/genji/hero-select-portrait.png" },
+                new Hero { Id = 8, Name = "Hanzo", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/hanzo/hero-select-portrait.png" },
+                new Hero { Id = 9, Name = "Junkrat", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/junkrat/hero-select-portrait.png" },
+                new Hero { Id = 10, Name = "Lucio", Role = "Support", CanHeal = false, Health = 200, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/lucio/hero-select-portrait.png" },
+                new Hero { Id = 11, Name = "McCree", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/mccree/hero-select-portrait.png" },
+                new Hero { Id = 12, Name = "Mei", Role = "Dps", CanHeal = true, Health = 250, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/mei/hero-select-portrait.png" },
+                new Hero { Id = 13, Name = "Mercy", Role = "Support", CanHeal = true, Health = 200, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/mercy/hero-select-portrait.png" },
+                new Hero { Id = 14, Name = "Moira", Role = "Support", CanHeal = true, Health = 200, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/moira/hero-select-portrait.png" },
+                new Hero { Id = 15, Name = "Orisa", Role = "Tank", CanHeal = false, Health = 200, Armour = 200, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/orisa/hero-select-portrait.png" },
+                new Hero { Id = 16, Name = "Pharah", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/pharah/hero-select-portrait.png" },
+                new Hero { Id = 17, Name = "Reaper", Role = "Dps", CanHeal = true, Health = 250, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/reaper/hero-select-portrait.png" },
+                new Hero { Id = 18, Name = "Reinhardt", Role = "Tank", CanHeal = false, Health = 300, Armour = 200, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/reinhardt/hero-select-portrait.png" },
+                new Hero { Id = 19, Name = "Sombra", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/sombra/hero-select-portrait.png" },
+                new Hero { Id = 20, Name = "Symmetra", Role = "Dps", CanHeal = false, Health = 100, Armour = 0, Shield = 100, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/symmetra/hero-select-portrait.png" },
+                new Hero { Id = 21, Name = "Torbjörn", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/torbjorn/hero-select-portrait.png" },
+                new Hero { Id = 22, Name = "Tracer", Role = "Dps", CanHeal = false, Health = 150, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/tracer/hero-select-portrait.png" },
+                new Hero { Id = 23, Name = "Widowmaker", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/widowmaker/hero-select-portrait.png" },
+                new Hero { Id = 24, Name = "Winston", Role = "Tank", CanHeal = false, Health = 400, Armour = 100, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/winston/hero-select-portrait.png" },
+                new Hero { Id = 25, Name = "Zarya", Role = "Tank", CanHeal = false, Health = 200, Armour = 0, Shield = 200, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/zarya/hero-select-portrait.png" },
+                new Hero { Id = 26, Name = "Zenyatta", Role = "Support", CanHeal = true, Health = 50, Armour = 0, Shield = 150, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/zenyatta/hero-select-portrait.png" },
+                new Hero { Id = 27, Name = "Ashe", Role = "Dps", CanHeal = false, Health = 200, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/ashe/hero-select-portrait.png" },
+                new Hero { Id = 28, Name = "Baptiste", Role = "Support", CanHeal = true, Health = 200, Armour = 0, Shield = 0, Image= "https://d1u1mce87gyfbn.cloudfront.net/hero/baptiste/hero-select-portrait.png" },
+                new Hero { Id = 29, Name = "Wrecking Ball", Role = "Tank", CanHeal = false, Health = 500, Armour = 100, Shield = 0, Image = "https://d1u1mce87gyfbn.cloudfront.net/hero/wrecking-ball/hero-select-portrait.png" }
+
                 );
 
 
@@ -115,20 +120,7 @@ namespace OverwatchApi.Data
                 new { Id = 28, HeroId = 28, DifficultyRating = 2 }
                 );
 
-            var user = new User
-            {
-                Firstname = "jonah",
-                Lastname = "de smet",
-                Username = "jonah.desmet"
 
-            };
-            var password = new PasswordHasher<User>();
-            var hashed = password.HashPassword(user, "secret");
-            user.Password = hashed;
-
-            modelBuilder.Entity<User>().HasData(
-                    user
-                );
             #endregion
 
         }

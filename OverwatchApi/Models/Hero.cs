@@ -17,6 +17,7 @@ namespace OverwatchApi.Models
         public int Shield { get; set; }
         public ICollection<HeroProperties> Properties { get; set; }
         public ICollection<HeroTeamComp> TeamComps { get; set; }
+        public string Image  { get; set; }
         #endregion
 
         #region Constructor

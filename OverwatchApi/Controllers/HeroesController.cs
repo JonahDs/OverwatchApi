@@ -12,6 +12,8 @@ using OverwatchApi.Models.RepositoryInterfaces;
 namespace OverwatchApi.Controllers
 {
     [Route("api/[controller]")]
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class HeroesController : ControllerBase
     {
@@ -23,14 +25,12 @@ namespace OverwatchApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IEnumerable<Hero> GetHeroes()
         {
-            return _heroRepo.GetAll().OrderBy(t => t.Name);
+            return _heroRepo.GetAll();
         }
 
         [HttpGet("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<Hero> GetHero(int id)
         {
             Hero hero = _heroRepo.GetHeroBy(id);

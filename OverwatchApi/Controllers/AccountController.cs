@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -66,7 +67,13 @@ namespace OverwatchApi.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-
+        [AllowAnonymous]
+        [HttpGet("checkusername")]
+        public async Task<ActionResult<Boolean>> CheckAvailableUserName(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            return user == null;
+        }
 
         [AllowAnonymous]
         [HttpPost("register")]
